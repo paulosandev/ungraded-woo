@@ -1,34 +1,28 @@
-# WordPress Core
-/wp-admin/
-/wp-includes/
-/index.php
-/license.txt
-/readme.html
-/wp-*.php
-/xmlrpc.php
-
-# Config y uploads  
+# WordPress core
+wp-admin/
+wp-includes/
 wp-config.php
-.htaccess
-/wp-content/uploads/
-/wp-content/upgrade/
-/wp-content/cache/
+*.log
+
+# Contenido
+wp-content/uploads/
+wp-content/upgrade/
+wp-content/cache/
+wp-content/backups/
 
 # Plugins (excepto los custom)
-/wp-content/plugins/*
-!/wp-content/plugins/mi-plugin-custom/
+wp-content/plugins/*
+!wp-content/plugins/mi-plugin-custom/
 
-# Temas (excepto el custom)
-/wp-content/themes/*
-!/wp-content/themes/mi-tema-custom/
+# Temas (excepto el tuyo)
+wp-content/themes/twenty*/
 
 # Local by Flywheel
-/app/
-/logs/
-/conf/
-*.sql
+app/
+logs/
+conf/
 
-# Misc
-*.log
+# Sistema
 .DS_Store
+Thumbs.db
 node_modules/
