@@ -5,50 +5,30 @@
 /license.txt
 /readme.html
 /wp-*.php
-xmlrpc.php
+/xmlrpc.php
 
-# Configuración
+# Config y uploads  
 wp-config.php
-wp-config-local.php
 .htaccess
-
-# Contenido
 /wp-content/uploads/
 /wp-content/upgrade/
-/wp-content/backup-db/
-/wp-content/backups/
-/wp-content/blogs.dir/
 /wp-content/cache/
-/wp-content/wp-cache-config.php
-/wp-content/plugins/hello.php
-/wp-content/plugins/akismet/
 
-# WooCommerce
-/wp-content/plugins/woocommerce/
-/wp-content/wc-logs/
+# Plugins (excepto los custom)
+/wp-content/plugins/*
+!/wp-content/plugins/mi-plugin-custom/
 
-# Themes (mantener solo tu tema personalizado)
-/wp-content/themes/twenty*/
-# Descomenta la siguiente línea y ajusta el nombre de tu tema
-#!/wp-content/themes/tu-tema-custom/
-
-# Logs y misc
-*.log
-*.sql
-*.zip
-*.tar.gz
-.DS_Store
-Thumbs.db
+# Temas (excepto el custom)
+/wp-content/themes/*
+!/wp-content/themes/mi-tema-custom/
 
 # Local by Flywheel
-/app/sql/
+/app/
 /logs/
 /conf/
+*.sql
 
-# Node
+# Misc
+*.log
+.DS_Store
 node_modules/
-npm-debug.log
-
-# Composer
-vendor/
-composer.lock

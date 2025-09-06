@@ -1,0 +1,39 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches: [ staging ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Deploy to Server
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: ${{ secrets.STAGING_HOST }}
+        username: ${{ secrets.STAGING_USER }}
+        key: ${{ secrets.STAGING_SSH_KEY }}
+        port: 22
+        script: |
+          cd /var/www/staging
+          
+          # Backup antes de pull
+          wp db export backup-$(date +%Y%m%d-%H%M%S).sql
+          
+          # Pull cambios
+          git fetch origin staging
+          git reset --hard origin/staging
+          
+          # Actualizar DB si es necesario
+          wp core update-db
+          wp cache flush
+          
+          # Permisos
+          find . -type d -exec chmod 755 {} \;
+          find . -type f -exec chmod 644 {} \;
+          
+          echo "Deploy completado: $(date)"
