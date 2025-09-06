@@ -1,0 +1,40 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches: [ staging ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Deploy to Ubuntu Server
+      uses: appleboy/ssh-action@v0.1.5
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        port: ${{ secrets.PORT }}
+        script: |
+          cd /var/www/staging
+          git pull origin staging
+          
+          # Sincronizar solo temas y plugins personalizados
+          rsync -av --delete ./wp-content/themes/tu-tema-custom/ /var/www/staging/wp-content/themes/tu-tema-custom/
+          rsync -av --delete ./wp-content/plugins/tu-plugin-custom/ /var/www/staging/wp-content/plugins/tu-plugin-custom/
+          
+          # Actualizar base de datos si es necesario
+          wp core update-db
+          
+          # Limpiar caché
+          wp cache flush
+          
+          # Ajustar permisos
+          sudo chown -R www-data:www-data /var/www/staging
+          sudo find /var/www/staging -type d -exec chmod 755 {} \;
+          sudo find /var/www/staging -type f -exec chmod 644 {} \;
+          
+          echo "Deploy completado: $(date)"
